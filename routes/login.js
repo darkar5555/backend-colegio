@@ -9,10 +9,50 @@ var Usuario = require('../models/usuario');
 
 app.post('/', (req, res, next)=>{
 
-    res.status(200).json({
-        ok: true,
-        mensaje: 'Login post correcto'
-    })
+    var body = req.body;
+
+    //Usamos la funcion findOne que nos ayudara a encontrar al usuario con ese email exacto, la funcion
+    //recibe el email de body y como en todos un callback con el (err, usuarioDB) en este usuarioDB nos devuelve
+    //la respuesta osea un res o response solo que le pusimos usuarioDB para que nos guiemos entonces aqui esta todo
+    //lo de modelo su id, email, password, role, etc.
+    Usuario.findOne({email : body.email}, (err, usuarioDB)=>{
+
+        if (err) {
+            return res.status(500).json({
+                ok: false,
+                mensaje: 'Erros al buscar usario',
+                errors: err
+            });
+        }
+
+        if (!usuarioDB) {
+            return res.status(400).json({
+                ok: false,
+                mensaje: 'Credenciales incorrectas - email'
+            });
+        }
+        
+
+        //Aqui comparamos las contraseñoas ingresadas a ver si coinciden y puede ingresar o no a la aplicaciones
+        //para eso nos ayudamos de la funcion del bcrypt la cual se llama .compareSync y devuelve un true si coinciden
+        if (!bcrypt.compareSync(body.password, usuarioDB.password)) {
+            return res.status(400).json({
+                ok: false,
+                mensaje: 'credenciales incorrectas - password',
+                errors: err
+            });
+        }
+
+        //Crear un token 
+
+        res.status(200).json({
+            ok: true,
+            usuario: usuarioDB,
+            id: usuarioDB._id
+        });
+    });
+
+    
 
 });
 
