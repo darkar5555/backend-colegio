@@ -13,9 +13,10 @@ var profesorSchema = new Schema({
     direccion: {type: String, required: [true, 'La direccion es necesaria']},
     telefono: {type: Number, required: [true, 'El telefono es necesario']},
     usuario: {type: Schema.Types.ObjectId, ref: 'Usuario', required: true},
+    colegio: { type: Schema.Types.ObjectId, ref: 'Colegio', required: true }
 
 }, {collection: 'profesores'});
 
-usuarioSchema.plugin(uniqueValidator, { message:'{PATH} debe de ser unico' });
+profesorSchema.plugin(uniqueValidator, { message:'{PATH} debe de ser unico' });
 
 module.exports = mongoose.model('Profesor', profesorSchema);

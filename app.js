@@ -30,6 +30,8 @@ var appRoutes = require('./routes/app');
 var usuarioRoutes = require('./routes/usuario');
 var loginRoutes = require('./routes/login');
 var alumnoRoutes = require('./routes/alumno');
+var profesorRoutes = require('./routes/profesor');
+var materiaRoutes = require('./routes/materia');
 
 
 //Conexion a la base de datos
@@ -43,6 +45,8 @@ mongoose.connection.openUri('mongodb://localhost:27017/colegioDB', (err, res)=>{
 app.use('/usuario', usuarioRoutes);
 app.use('/login', loginRoutes);
 app.use('/alumno', alumnoRoutes);
+app.use('/profesor', profesorRoutes);
+app.use('/materia', materiaRoutes);
 app.use('/', appRoutes);
 
 
