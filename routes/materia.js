@@ -23,7 +23,7 @@ app.get('/', (req, res)=>{
             Materia.count({},(err, conteo)=>{
                 res.status(200).json({
                     ok: true,
-                    alumnos: alumnos,
+                    materia: materias   ,
                     conteo: conteo 
                 });
             });
@@ -51,7 +51,8 @@ app.post('/',(req, res)=>{
 
         res.status(200).json({
             ok: true,
-            mensaje: 'Materia creada con exito'
+            mensaje: 'Materia creada con exito',
+            materia: materiaGuardada
         });
     });
 

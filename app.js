@@ -32,6 +32,10 @@ var loginRoutes = require('./routes/login');
 var alumnoRoutes = require('./routes/alumno');
 var profesorRoutes = require('./routes/profesor');
 var materiaRoutes = require('./routes/materia');
+var colegioRoutes = require('./routes/colegio');
+var claseRoutes = require('./routes/clase');
+var notaRoutes = require('./routes/nota');
+
 
 
 //Conexion a la base de datos
@@ -47,6 +51,9 @@ app.use('/login', loginRoutes);
 app.use('/alumno', alumnoRoutes);
 app.use('/profesor', profesorRoutes);
 app.use('/materia', materiaRoutes);
+app.use('/nota', notaRoutes);
+app.use('/clase', claseRoutes);
+app.use('/colegio', colegioRoutes);
 app.use('/', appRoutes);
 
 

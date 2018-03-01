@@ -12,7 +12,7 @@ var profesorSchema = new Schema({
     dni: {type: Number, unique: true, required: [true, 'El dni debe de ser unico']},
     direccion: {type: String, required: [true, 'La direccion es necesaria']},
     telefono: {type: Number, required: [true, 'El telefono es necesario']},
-    usuario: {type: Schema.Types.ObjectId, ref: 'Usuario', required: true},
+    usuario: {type: Schema.Types.ObjectId, ref: 'Usuario', required: true, unique: true},
     colegio: { type: Schema.Types.ObjectId, ref: 'Colegio', required: true }
 
 }, {collection: 'profesores'});

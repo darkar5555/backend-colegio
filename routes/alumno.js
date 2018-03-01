@@ -48,7 +48,7 @@ app.post('/', (req, res, next)=>{
         apellido_materno: body.apellido_materno,
         direccion: body.direccion,
         telefono: body.telefono,
-        usuario: req.usuario._id,
+        usuario: body.usuario,
         colegio: body.colegio
     });
 
@@ -101,7 +101,7 @@ app.put('/:id',(req, res, next)=>{
         alumno.apellido_materno = body.apellido_materno;
         alumno.direccion = body.direccion;
         alumno.telefono = body.telefono;
-        alumno.usuario = req.usuario._id;
+        alumno.usuario = body.usuario;
         alumno.colegio = body.colegio;
 
         alumno.save((err, alumnoGuardado)=>{

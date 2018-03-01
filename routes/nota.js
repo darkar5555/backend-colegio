@@ -43,7 +43,7 @@ app.post('/', (req, res)=>{
         permanente2: body.permanente2,
         parcial: body.parcial,
         final: body.final,
-        alumno: req.alumno._id,
+        alumno: body.alumno,
         materia: body.materia
     });
 
@@ -97,7 +97,7 @@ app.put('/:id', (req, res)=>{
         nota.permanente2 = body.permanente2,
         nota.parcial = body.parcial,
         nota.final = body.final,
-        nota.alumno = req.alumno._id;
+        nota.alumno = body.alumno;
         nota.materia = body.materia;
 
         nota.save((err, notaGuardada)=>{

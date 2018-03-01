@@ -15,6 +15,6 @@ var claseSchema = new Schema({
 
 });
 
-usuarioSchema.plugin(uniqueValidator, { message:'{PATH} debe de ser unico' });
+claseSchema.plugin(uniqueValidator, { message:'{PATH} debe de ser unico' });
 
 module.exports = mongoose.model('Clase', claseSchema);

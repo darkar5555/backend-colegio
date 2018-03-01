@@ -47,7 +47,7 @@ app.post('/', (req, res)=>{
         dni: body.dni,
         direccion: body.direccion,
         telefono: body.telefono,
-        usuario: req.usuario._id,
+        usuario: body.usuario,
         colegio: body.colegio
 
     });
@@ -100,7 +100,7 @@ app.put('/:id', (req, res)=>{
         profesor.dni = body.dni,
         profesor.direccion = body.direccion,
         profesor.telefono = body.telefono,
-        profesor.usuario = req.usuario._id,
+        profesor.usuario = body.usuario,
         profesor.colegio = body.colegio
 
         profesor.save((err, profesorGuardado)=>{
