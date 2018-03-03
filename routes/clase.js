@@ -10,8 +10,7 @@ var Clase = require('../models/clase');
 app.get('/', (req, res)=>{
 
     Clase.find({})
-        .sort({ nombre: 1 })
-        .populate('materia')
+        // .sort({ nombre: 1 })
         .populate('alumno', 'nombre apellido_paterno apellido_materno')
         .populate('profesor', 'nombre apellido_paterno apellido_materno')
         .exec((err, clases)=>{
@@ -27,7 +26,7 @@ app.get('/', (req, res)=>{
                 res.status(200).json({
                     ok: true,
                     clases: clases,
-                    total: conte
+                    total: conteo
                 });
             });
         });
@@ -42,9 +41,8 @@ app.post('/', (req, res)=>{
     var clase = new Clase({
         codigo: body.codigo,
         nombre: body.nombre,
-        materia: body.materia,
+        alumno: body.alumno,
         profesor: body.profesor,
-        alumno: body.alumno
     });
 
     clase.save((err, claseGuardada)=>{
@@ -94,9 +92,9 @@ app.put('/:id', (req, res)=>{
 
         clase.codigo = body.codigo;
         clase.nombre = body.nombre;
-        clase.materia = body.materia;
-        clase.profesor = body.profesor;
         clase.alumno = body.alumno;
+        clase.profesor = body.profesor;
+        
 
         clase.save((err, claseGuardada)=>{
             if (err) {
