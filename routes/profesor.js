@@ -12,7 +12,7 @@ var Profesor = require('../models/profesor');
 app.get('/', (req, res, next)=>{
 
     Profesor.find({})
-        .populate('usuario', 'nombre email')
+        .populate('usuario', 'nombre email role')
         .populate('colegio')
         .exec((err, profesores)=>{
 
@@ -27,7 +27,7 @@ app.get('/', (req, res, next)=>{
             Profesor.count({}, (err, conteo)=>{
                 res.status(200).json({
                     ok: true,
-                    profesor: profesores,
+                    profesores: profesores,
                     total: conteo
                 });
             });

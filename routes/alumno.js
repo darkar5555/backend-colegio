@@ -10,7 +10,8 @@ var Alumno = require('../models/alumno');
 app.get('/',(req, res, next)=>{
 
     Alumno.find({})
-        .populate('usuario', 'nombre email')
+        .sort({nombre: 1})
+        .populate('usuario', 'nombre email role')
         .populate('colegio')
         .exec((err, alumnos)=>{
 

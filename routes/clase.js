@@ -7,10 +7,34 @@ var Clase = require('../models/clase');
 //==========================================
 //Obtener las clase
 //==========================================
-app.get('/', (req, res)=>{
+app.get('/:codigo', (req, res)=>{
+    var codigo = req.params.codigo;
+    Clase.find({codigo: codigo})
+        .sort({ nombre: 1 })
+        .populate('alumno', 'nombre apellido_paterno apellido_materno dni direccion telefono')
+        .populate('profesor', 'nombre apellido_paterno apellido_materno')
+        .exec((err, clases)=>{
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error al obtener clases',
+                    errors: err
+                });
+            }
 
+            Clase.count({}, (err, conteo)=>{
+                res.status(200).json({
+                    ok: true,
+                    clases: clases,
+                    total: conteo
+                });
+            });
+        });
+});
+
+app.get('/', (req, res)=>{
     Clase.find({})
-        // .sort({ nombre: 1 })
+        .sort({ nombre: 1 })
         .populate('alumno', 'nombre apellido_paterno apellido_materno')
         .populate('profesor', 'nombre apellido_paterno apellido_materno')
         .exec((err, clases)=>{
