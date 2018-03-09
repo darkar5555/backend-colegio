@@ -4,6 +4,7 @@ var app = express();
 
 var Materia = require('../models/materia');
 
+var mdAutenticacion = require('../middlewares/autenticacion');
 
 //=================================
 //Obtener las materias
@@ -23,7 +24,7 @@ app.get('/', (req, res)=>{
             Materia.count({},(err, conteo)=>{
                 res.status(200).json({
                     ok: true,
-                    materia: materias   ,
+                    materias: materias,
                     conteo: conteo 
                 });
             });
@@ -33,7 +34,7 @@ app.get('/', (req, res)=>{
 //=======================================
 //Crear una materia
 //=======================================
-app.post('/',(req, res)=>{
+app.post('/', mdAutenticacion.verificaToken,(req, res)=>{
 
     var body = req.body;
     var materia = new Materia({
@@ -62,7 +63,7 @@ app.post('/',(req, res)=>{
 //============================================
 //Actualizar una materia
 //============================================
-app.put('/:id', (req, res)=>{
+app.put('/:id', mdAutenticacion.verificaToken,(req, res)=>{
 
     var id = req.params.id;
     var body = req.body;
@@ -109,7 +110,7 @@ app.put('/:id', (req, res)=>{
 //===================================
 //Borrar una materia
 //===================================
-app.delete('/:id', (req, res)=>{
+app.delete('/:id', mdAutenticacion.verificaToken, (req, res)=>{
 
     var id = req.params.id;
 

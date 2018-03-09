@@ -4,6 +4,8 @@ var app = express();
 
 var Colegio = require('../models/colegio');
 
+var mdAutenticacion = require('../middlewares/autenticacion');
+
 
 //=======================================
 //Obtener colegio
@@ -32,7 +34,7 @@ app.get('/', (req, res)=>{
 //============================================
 //Crear un colegio
 //============================================
-app.post('/', (req, res)=>{
+app.post('/', mdAutenticacion.verificaToken, (req, res)=>{
 
     var body = req.body;
     var colegio = new Colegio({
@@ -63,7 +65,7 @@ app.post('/', (req, res)=>{
 //=============================================
 //Actualizar un colegio
 //=============================================
-app.put('/:id', (req, res)=>{
+app.put('/:id', mdAutenticacion.verificaToken, (req, res)=>{
 
     var id = req.params.id;
     var body = req.body;
@@ -112,7 +114,7 @@ app.put('/:id', (req, res)=>{
 //==============================================
 //Eliminar un colegio
 //==============================================
-app.delete('/:id', (req, res)=>{
+app.delete('/:id', mdAutenticacion.verificaToken, (req, res)=>{
 
     var id = req.params.id;
 

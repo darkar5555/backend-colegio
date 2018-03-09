@@ -2,6 +2,8 @@ var express = require('express');
 
 var app = express();
 
+var mdAutenticacion = require('../middlewares/autenticacion');
+
 var Nota = require('../models/nota');
 
 //=======================================
@@ -10,6 +12,7 @@ var Nota = require('../models/nota');
 app.get('/', (req, res)=>{
 
     Nota.find({})
+        .sort({"alumno.nombre" : 1})
         .populate('alumno')
         .populate('materia')
         .exec((err, notas)=>{
@@ -25,7 +28,7 @@ app.get('/', (req, res)=>{
             Nota.count({}, (err, conteo)=>{
                 res.status(200).json({
                     ok: true,
-                    nota: notas,
+                    notas: notas,
                     total: conteo 
                 });
             });
@@ -35,7 +38,7 @@ app.get('/', (req, res)=>{
 //========================================
 //Crear la nota
 //========================================
-app.post('/', (req, res)=>{
+app.post('/', mdAutenticacion.verificaToken,(req, res)=>{
 
     var body = req.body;
     var nota = new Nota({
@@ -69,7 +72,7 @@ app.post('/', (req, res)=>{
 //==============================================
 //Actualizar nota
 //==============================================
-app.put('/:id', (req, res)=>{
+app.put('/:id', mdAutenticacion.verificaToken, (req, res)=>{
 
     var id = req.params.id;
     var body = req.body;
@@ -122,7 +125,7 @@ app.put('/:id', (req, res)=>{
 //============================================
 //Eliminar una nota
 //============================================
-app.delete('/:id',(req, res)=>{
+app.delete('/:id', mdAutenticacion.verificaToken,(req, res)=>{
 
     var id = req.params.id;
 

@@ -4,6 +4,8 @@ var app = express();
 
 var Alumno = require('../models/alumno');
 
+var mdAutenticacion = require('../middlewares/autenticacion');
+
 //===============================
 // Get todos los alumnos
 //===============================
@@ -40,7 +42,7 @@ app.get('/',(req, res, next)=>{
 //======================================
 // Crear a un alumno
 //======================================
-app.post('/', (req, res, next)=>{
+app.post('/', mdAutenticacion.verificaToken, (req, res, next)=>{
 
     var body = req.body;
     var alumno = new Alumno({
@@ -74,7 +76,7 @@ app.post('/', (req, res, next)=>{
 //==========================================
 //Actualizar un usuario
 //==========================================
-app.put('/:id',(req, res, next)=>{
+app.put('/:id', mdAutenticacion.verificaToken, (req, res, next)=>{
 
     var id = req.params.id;
     var body = req.body;
@@ -125,7 +127,7 @@ app.put('/:id',(req, res, next)=>{
 //================================
 //Borrar un alumno
 //================================
-app.delete('/:id', (req, res)=>{
+app.delete('/:id', mdAutenticacion.verificaToken, (req, res)=>{
 
     var id = req.params.id;
     Alumno.findByIdAndRemove(id, (err, alumnoBorrado)=>{

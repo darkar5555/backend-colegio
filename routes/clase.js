@@ -4,6 +4,8 @@ var app = express();
 
 var Clase = require('../models/clase');
 
+var mdAutenticacion = require('../middlewares/autenticacion');
+
 //==========================================
 //Obtener las clase
 //==========================================
@@ -34,7 +36,7 @@ app.get('/:codigo', (req, res)=>{
 
 app.get('/', (req, res)=>{
     Clase.find({})
-        .sort({ nombre: 1 })
+        .sort({ codigo: 1 })
         .populate('alumno', 'nombre apellido_paterno apellido_materno')
         .populate('profesor', 'nombre apellido_paterno apellido_materno')
         .exec((err, clases)=>{
@@ -59,7 +61,7 @@ app.get('/', (req, res)=>{
 //=================================================
 //Crear una clase
 //=================================================
-app.post('/', (req, res)=>{
+app.post('/', mdAutenticacion.verificaToken, (req, res)=>{
 
     var body = req.body;
     var clase = new Clase({
@@ -91,7 +93,7 @@ app.post('/', (req, res)=>{
 //============================================
 //Actualizar una clase
 //============================================
-app.put('/:id', (req, res)=>{
+app.put('/:id', mdAutenticacion.verificaToken, (req, res)=>{
 
     var id = req.params.id;
     var body = req.body;
@@ -143,7 +145,7 @@ app.put('/:id', (req, res)=>{
 //===================================================
 //Eliminar una clase
 //===================================================
-app.delete('/:id', (req, res)=>{
+app.delete('/:id', mdAutenticacion.verificaToken, (req, res)=>{
 
     var id = req.params.id;
 

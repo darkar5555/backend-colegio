@@ -35,6 +35,7 @@ var materiaRoutes = require('./routes/materia');
 var colegioRoutes = require('./routes/colegio');
 var claseRoutes = require('./routes/clase');
 var notaRoutes = require('./routes/nota');
+var busquedaRoutes = require('./routes/busqueda');
 
 
 
@@ -54,6 +55,7 @@ app.use('/materia', materiaRoutes);
 app.use('/nota', notaRoutes);
 app.use('/clase', claseRoutes);
 app.use('/colegio', colegioRoutes);
+app.use('/busqueda', busquedaRoutes);
 app.use('/', appRoutes);
 
 

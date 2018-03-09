@@ -1,6 +1,6 @@
 var express = require('express');
 
-
+var mdAutenticacion = require('../middlewares/autenticacion');
 var app = express();
 
 var Profesor = require('../models/profesor');
@@ -37,7 +37,7 @@ app.get('/', (req, res, next)=>{
 //==================================
 //Crear un profesor
 //==================================
-app.post('/', (req, res)=>{
+app.post('/', mdAutenticacion.verificaToken,(req, res)=>{
 
     var body = req.body;
     var profesor = new Profesor({
@@ -72,7 +72,7 @@ app.post('/', (req, res)=>{
 //========================================
 //Actualizar un profesor
 //========================================
-app.put('/:id', (req, res)=>{
+app.put('/:id', mdAutenticacion.verificaToken,(req, res)=>{
 
     var id = req.params.id;
     var body = req.body;
@@ -123,7 +123,7 @@ app.put('/:id', (req, res)=>{
 //=========================================
 //Borrar un profesor
 //=========================================
-app.delete('/:id', (req, res)=>{
+app.delete('/:id', mdAutenticacion.verificaToken, (req, res)=>{
 
     var id = req.params.id;
 

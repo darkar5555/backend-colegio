@@ -7,6 +7,8 @@ var app = express();
 
 var Usuario = require('../models/usuario');
 
+var mdAutenticacion = require('../middlewares/autenticacion');
+
 
 //===========================================================
 //Obtener todos los usuarios
@@ -36,7 +38,7 @@ app.get("/", (req, res, next) => {
 //===========================================================
 //Crear un nuevo usuario 
 //===========================================================
-app.post('/', (req, res, next)=>{
+app.post('/', mdAutenticacion.verificaToken ,(req, res, next)=>{
 
     //Lo que se envia en ese formulario se almacena en este body
     var body = req.body;
@@ -74,7 +76,7 @@ app.post('/', (req, res, next)=>{
 //===========================================================
 //Actualizar un nuevo usuario 
 //===========================================================
-app.put('/:id', (req, res, next)=>{
+app.put('/:id', mdAutenticacion.verificaToken, (req, res, next)=>{
 
     //con esto obtenemos el id  
     var id = req.params.id;
@@ -132,7 +134,7 @@ app.put('/:id', (req, res, next)=>{
 //=======================================
 //Borrar un uusairo by id
 //=======================================
-app.delete('/:id', (req, res, next)=>{
+app.delete('/:id', mdAutenticacion.verificaToken, (req, res, next)=>{
 
     var id =  req.params.id;
 
