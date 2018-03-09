@@ -7,7 +7,7 @@ var Clase = require('../models/clase');
 var mdAutenticacion = require('../middlewares/autenticacion');
 
 //==========================================
-//Obtener las clase
+//Obtener una determinada clase
 //==========================================
 app.get('/:codigo', (req, res)=>{
     var codigo = req.params.codigo;
@@ -34,6 +34,9 @@ app.get('/:codigo', (req, res)=>{
         });
 });
 
+//==========================================
+//Obtener todas las clases
+//==========================================
 app.get('/', (req, res)=>{
     Clase.find({})
         .sort({ codigo: 1 })

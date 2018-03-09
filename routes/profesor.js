@@ -34,6 +34,38 @@ app.get('/', (req, res, next)=>{
         });
 });
 
+//=============================================
+//Obtener un profesor de acuardo al id
+//=============================================
+app.get('/:id', (req, res, next)=>{
+    var id = req.params.id;
+    Profesor.findById(id)
+            .populate('usuario', 'nombre email role')
+            .populate('colegio')
+            .exec((err, profesor)=>{
+                if (err) {
+                    return res.status(500).json({
+                        ok: false,
+                        mensaje: 'Error al obtener el profesor',
+                        error: err
+                    });
+                }
+                if (!profesor) {
+                    return res.status(400).json({
+                        ok: false,
+                        mensaje: 'El profesor con ese id' + id + 'no existe',
+                        errors: {message: 'No existe un profesor con ese ID'}
+                    });
+                }
+
+                res.status(200).json({
+                    ok: true,
+                    profesor: profesor
+                });
+            });
+});
+
+
 //==================================
 //Crear un profesor
 //==================================
