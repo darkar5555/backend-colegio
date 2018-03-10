@@ -95,7 +95,7 @@ app.post('/', mdAutenticacion.verificaToken,(req, res)=>{
         res.status(201).json({
             ok: true,
             mensaje: 'Profesor creado',
-            profesorGuardado: profesorGuardado
+            profesor: profesorGuardado
         });
 
     });
