@@ -39,6 +39,37 @@ app.get('/',(req, res, next)=>{
 });
 
 
+//=============================================
+//Obtener un alumno de acuardo al id
+//=============================================
+app.get('/:id', (req, res, next)=>{
+    var id = req.params.id;
+    Alumno.findById(id)
+            .populate('usuario', 'nombre email role')
+            .populate('colegio')
+            .exec((err, alumno)=>{
+                if (err) {
+                    return res.status(500).json({
+                        ok: false,
+                        mensaje: 'Error al obtener el alumno',
+                        error: err
+                    });
+                }
+                if (!alumno) {
+                    return res.status(400).json({
+                        ok: false,
+                        mensaje: 'El alumno con ese id' + id + 'no existe',
+                        errors: {message: 'No existe un alumno con ese ID'}
+                    });
+                }
+
+                res.status(200).json({
+                    ok: true,
+                    alumno: alumno
+                });
+            });
+});
+
 //======================================
 // Crear a un alumno
 //======================================
@@ -68,7 +99,7 @@ app.post('/', mdAutenticacion.verificaToken, (req, res, next)=>{
         res.status(201).json({
             ok: true,
             mensaje: 'Alumno guardado',
-            alumnoGuardado: alumnoGuardado
+            alumno: alumnoGuardado
         });
     });
 });

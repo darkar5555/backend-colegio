@@ -18,8 +18,40 @@ app.get('/', (req, res)=>{
             if (err) {
                 return res.status(500).json({
                     ok: false,
-                    mensaje: 'Error al obtener colegios',
+                    mensaje: 'Error al obtener colegio',
                     errors: err
+                });
+            }
+
+            res.status(200).json({
+                ok: true,
+                colegio: colegio
+            });
+        });
+
+});
+//=======================================
+//Obtener colegio por id
+//=======================================
+app.get('/:id', (req, res)=>{
+
+    var id = req.params.id;
+    
+    Colegio.findById(id)
+        .exec((err, colegio)=>{
+
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error al obtener el colegio',
+                    error: err
+                });
+            }
+            if (!colegio) {
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'El colegio con ese id' + id + 'no existe',
+                    errors: {message: 'No existe un colegio con ese ID'}
                 });
             }
 

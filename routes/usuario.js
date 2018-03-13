@@ -35,6 +35,36 @@ app.get("/", (req, res, next) => {
 });
 
 
+//=============================================
+//Obtener un usuario de acuardo al id
+//=============================================
+app.get('/:id', (req, res, next)=>{
+    var id = req.params.id;
+    Usuario.findById(id)
+            .exec((err, usuario)=>{
+                if (err) {
+                    return res.status(500).json({
+                        ok: false,
+                        mensaje: 'Error al obtener el usuario',
+                        error: err
+                    });
+                }
+                if (!usuario) {
+                    return res.status(400).json({
+                        ok: false,
+                        mensaje: 'El usuario con ese id' + id + 'no existe',
+                        errors: {message: 'No existe un usuario con ese ID'}
+                    });
+                }
+
+                res.status(200).json({
+                    ok: true,
+                    usuario: usuario
+                });
+            });
+});
+
+
 //===========================================================
 //Crear un nuevo usuario 
 //===========================================================
